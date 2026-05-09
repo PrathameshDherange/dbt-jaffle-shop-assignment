@@ -1,6 +1,6 @@
 sources:
   - name: jaffale_shop
-    database: raw
+    database: raw_db
     schema: jaffle_shop
 
     #Source jaffale_shop level freshness
@@ -16,13 +16,43 @@ sources:
 
     tables:
       - name: orders
-        
+        columns:
+          - name: id
+            data_tests:
+              - unique
+          - name: status
+            data_tests:
+              - accepted_values:
+                  arguments:
+                    values:
+                      ["returned", "pending", "completed", "shipped", "placed"]
+
       - name: customers
+        columns:
+          - name: id
+            data_tests:
+              - unique
       - name: order_status_history
+        columns:
+          - name: order_id
+            data_tests:
+              - unique
+        config: 
+          freshness:
+            warn_after:
+              count: 1200
+              period: day
+            error_after:
+              count: 3650
+              period: day
+          loaded_at_field: updated_at
 
   - name: stripe
-    database: raw
+    database: raw_db
     schema: stripe
-    tables: 
+    tables:
       - name: payments
-        
+        columns:
+          - name: id
+            data_tests:
+              - unique
