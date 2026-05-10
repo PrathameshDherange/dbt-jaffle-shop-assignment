@@ -8,7 +8,7 @@ with source as (
     last_name,
     email,
     _loaded_at
-    from customers
+    from source
     
 )
 Select * from renamed

@@ -8,7 +8,7 @@ with source as (
         ,order_date
         ,status
         ,_loaded_at
-    from orders
+    from source
 )
 
 select * from renamed
